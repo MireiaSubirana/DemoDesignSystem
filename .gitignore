@@ -25,3 +25,7 @@ dist-ssr
 
 *storybook.log
 storybook-static
+
+# Claude Code: share launch.json and CLAUDE.md, but not machine-local settings
+# (settings.local.json holds permission grants specific to one computer).
+.claude/settings.local.json

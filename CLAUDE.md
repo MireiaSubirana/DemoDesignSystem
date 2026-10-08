@@ -1,7 +1,8 @@
 # Figma to Design System
 
 A React design system generated from a Figma file, plus the portfolio page
-built from it. Everything lives in `DemoDesignSystem/`.
+built from it. This folder is the whole project and the root of the git
+repository — paths below are relative to it.
 
 ## Who you're working with
 
@@ -51,10 +52,9 @@ the logo size — Figma has no tokens for those, and each is documented.
 
 | File | What it is |
 |---|---|
-| `DemoDesignSystem/gaps.md` | Everything that didn't translate cleanly from Figma — Figma-side mistakes, missing states, untokenised values, contrast findings. Read this before answering "why is X like this?" |
-| `DemoDesignSystem/README.md` | Commands, how to run things |
-| `src/components/breakpoint.ts` | The shared `desktop \| tablet \| mobile` type and why it's a prop |
-| `src/useBreakpoint.ts` | Hook that makes the real page responsive |
+| `gaps.md` | Everything that didn't translate cleanly from Figma — Figma-side mistakes, missing states, untokenised values, contrast findings. Read this before answering "why is X like this?" |
+| `README.md` | Commands, how to run things |
+| `src/components/*/[Name].module.css` | Where responsiveness lives. Mobile-first media queries at 800px and 1280px; `ProjectCard` uses a **container** query instead. Each file explains its strategy at the top. |
 | `scripts/build-tokens.mjs` | The token → CSS generator |
 
 ## Commands
@@ -64,18 +64,28 @@ the logo size — Figma has no tokens for those, and each is documented.
 | `npm run dev` | The real website, localhost:5173 |
 | `npm run storybook` | Component catalogue, localhost:6006 |
 | `npm run build:tokens` | Regenerate `tokens.css` from `tokens.json` |
-| `npx tsc --noEmit` | Type-check |
+| `npm run build` | Type-check **and** build. Use this, not `npx tsc --noEmit` — the bare command misses files the build config includes, and has let a real error through. |
 
-Run these from `DemoDesignSystem/`, not the repo root.
+Run these from this folder — it is both the project root and the repo root.
 
 ## Conventions
 
 - **CSS Modules**, not a CSS-in-JS library — plain CSS, scoped per component.
+- **Responsiveness is CSS, never a prop.** No component takes a `breakpoint`;
+  there is no `useBreakpoint` hook (both were removed on 2026-10-08 — `gaps.md`
+  §10 explains why and what replaced them). The thresholds are **800** and
+  **1280**, the same numbers as the `text primitives` modes in `tokens.json`,
+  so layout and type scale always change on the same pixel. If you add a
+  component, match that — don't reintroduce the prop.
 - Prop names match the Figma property names, including the odd ones
   (`hadButton` is a Figma typo kept deliberately; `Menu`'s `state` is renamed
   from Figma's unusable `"Property 1"`). `gaps.md` §1 explains each.
 - Every component and prop has a written description in its story — the
   Storybook MCP addon reads these, so keep them accurate if you change a prop.
-- Git repository, rooted at `DemoDesignSystem/` (not the parent folder). Pushed to
+- Git repository rooted here. Pushed to
   `github.com/MireiaSubirana/DemoDesignSystem` over SSH. History starts at the
   initial commit of 2026-10-08 — nothing before that was ever tracked.
+- **This file and `.claude/launch.json` are tracked by the repo** (moved in
+  from the parent folder on 2026-10-08, where they sat outside version control
+  and a stale duplicate of this file had drifted). Open the project at this
+  folder, not its parent, so they are picked up.
