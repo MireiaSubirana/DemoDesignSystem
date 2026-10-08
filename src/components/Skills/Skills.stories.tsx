@@ -10,8 +10,8 @@ const meta = {
       description: {
         component: `
 A section listing what you do, from the Figma component set **Skills**: a
-headline with three **SkillItem** entries under it. In a row on desktop and
-tablet, stacked on mobile.
+headline with three **SkillItem** entries under it. Stacked on narrow screens,
+in a row from 800px up - switch the **viewport** in the toolbar to see it.
 
 Figma always shows exactly three items. Here \`items\` is an array, so you are
 not stuck with three - but three is what the design was composed for, and
@@ -28,13 +28,6 @@ four will get cramped on tablet.
     items: {
       description:
         'The skills to list, as `{ headline, content }` objects. Three matches the design.',
-    },
-    breakpoint: {
-      description:
-        '`desktop` and `tablet` lay the items out in a row (different padding); `mobile` stacks them.',
-      control: 'radio',
-      options: ['desktop', 'tablet', 'mobile'],
-      table: { defaultValue: { summary: 'desktop' } },
     },
   },
   args: {
@@ -63,12 +56,10 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
 };
 
 export const Tablet: Story = {
-  args: { breakpoint: 'tablet' },
   globals: { viewport: { value: 'tablet' } },
   parameters: {
     docs: {
@@ -81,14 +72,12 @@ export const Tablet: Story = {
 };
 
 export const Mobile: Story = {
-  args: { breakpoint: 'mobile' },
   globals: { viewport: { value: 'mobile' } },
 };
 
 export const TwoSkills: Story = {
   name: 'Desktop / only two skills',
   args: {
-    breakpoint: 'desktop',
     items: [
       {
         headline: 'Design systems',

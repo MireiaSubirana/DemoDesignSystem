@@ -1,32 +1,48 @@
+/*
+ * About
+ *
+ * RESPONSIVE STRATEGY - mobile-first media queries. Base rules = small
+ * screens. See the longer explanation at the top of Hero.module.css.
+ *
+ * About is the busiest of the six: all three Figma frames differ, so it uses
+ * both thresholds.
+ *   800px  - stack becomes two columns; padding grows
+ *   1280px - padding grows again; the columns centre vertically instead of
+ *            aligning to the top, and the gap widens
+ *
+ * THE IMAGE-ON-TOP TRICK
+ * In the Figma mobile frame the image sits ABOVE the text; on wider screens
+ * the text comes first. The markup always puts the text first (that is the
+ * reading order, and the order a screen reader should use), and `order: -1`
+ * on the image moves it to the top visually on mobile only.
+ *
+ * `order` is safe here precisely because the image is not interactive - it
+ * contains nothing you can click or Tab to. If the image block ever gained a
+ * link or a button, the visual order and the keyboard Tab order would
+ * disagree, which is a real accessibility problem; at that point the right
+ * fix is to reorder the markup instead.
+ */
+
 .about {
   background-color: var(--surface-default);
   width: 100%;
   box-sizing: border-box;
+  /* Mobile padding, measured from the Figma mobile frame: 32px / 24px. */
+  padding: var(--space-600) var(--space-500);
 }
 
-/* Padding measured from the three Figma frames. */
-.desktop { padding: var(--space-800) var(--space-700) var(--space-700) var(--space-800); } /* 64 48 48 64 */
-.tablet  { padding: var(--space-700) var(--space-600); }                                   /* 48 / 32 */
-.mobile  { padding: var(--space-600) var(--space-500); }                                   /* 32 / 24 */
-
+/* MOBILE: one column. */
 .container {
   display: flex;
-}
-
-/* Side by side on desktop and tablet, with different gaps. */
-.desktop .container {
-  flex-direction: row;
-  align-items: center;
-  gap: var(--space-900); /* 80px */
-}
-.tablet .container {
-  flex-direction: row;
-  align-items: flex-start;
-  gap: var(--space-800); /* 64px */
-}
-.mobile .container {
   flex-direction: column;
   gap: var(--space-500); /* 24px */
+}
+
+/* On mobile the image goes above the text - see the note at the top. */
+.media {
+  flex: 1;
+  min-width: 0;
+  order: -1;
 }
 
 .content {
@@ -37,9 +53,45 @@
    * shrink properly instead of overflowing when the text is long. */
   flex: 1;
   min-width: 0;
-  /* Stops the button stretching to the full column width on desktop, which
-   * matches Figma's "hug contents" sizing. */
-  align-items: flex-start;
+  /* On mobile the Figma frame shows the button stretched full width. */
+  align-items: stretch;
+}
+
+/* TABLET AND UP: two columns, text first. */
+@media (min-width: 800px) {
+  .about {
+    padding: var(--space-700) var(--space-600); /* 48px / 32px */
+  }
+
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-800); /* 64px */
+  }
+
+  /* Back to the natural markup order, so the text is on the left. */
+  .media {
+    order: 0;
+  }
+
+  /* Stops the button stretching to the full column width, which matches
+   * Figma's "hug contents" sizing on the wider frames. */
+  .content {
+    align-items: flex-start;
+  }
+}
+
+/* DESKTOP: more padding, a wider gap, and the two columns centred against
+ * each other rather than top-aligned. */
+@media (min-width: 1280px) {
+  .about {
+    padding: var(--space-800) var(--space-700) var(--space-700) var(--space-800); /* 64 48 48 64 */
+  }
+
+  .container {
+    align-items: center;
+    gap: var(--space-900); /* 80px */
+  }
 }
 
 /* Mirrors Figma's font/headline/lg text style. */
@@ -64,11 +116,6 @@
   margin: 0;
 }
 
-.media {
-  flex: 1;
-  min-width: 0;
-}
-
 /* In Figma the media slot is a perfect square, so we force a 1:1 ratio rather
  * than a fixed pixel height - that way it stays square at any width. */
 .media > * {
@@ -81,10 +128,4 @@
 
 .mediaPlaceholder {
   background-color: var(--surface-raised);
-}
-
-/* On mobile the image is full width and the button goes full width too,
- * which is what the Figma mobile frame shows. */
-.mobile .content {
-  align-items: stretch;
 }

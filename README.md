@@ -96,17 +96,22 @@ components use:
 |---|---|---|
 | `Button` | Button | `label`, `variant`, `state` |
 | `Menu` | Menu | `state`, `expanded` |
-| `Navigation` | Navigation | `breakpoint`, `links`, `ctaLabel` |
-| `Hero` | Hero | `headline`, `subtitle`, `breakpoint` |
+| `Navigation` | Navigation | `links`, `ctaLabel`, `menuOpen` |
+| `Hero` | Hero | `headline`, `subtitle`, `as` |
 | `About` | About | `headline`, `description`, `media`, `hadButton` |
 | `ProjectCard` | ProjectCard | `headline`, `description`, `media`, `hasBG` |
-| `Skills` | Skills | `headline`, `items`, `breakpoint` |
-| `Footer` | Footer | `copyright`, `links`, `breakpoint` |
+| `Skills` | Skills | `headline`, `items` |
+| `Footer` | Footer | `copyright`, `links` |
 | `Logo` | Logo (standalone) | `label` |
 | `SkillItem` | SkillItem (standalone) | `headline`, `content` |
 
 **63 tokens** across 5 collections, and **11 typography classes** from the
 Figma text styles.
+
+**No component takes a breakpoint.** Responsiveness is handled in CSS — media
+queries at 800px and 1280px, except `ProjectCard`, which uses a container query
+so it responds to its own width rather than the window's. Resize the browser
+and everything follows. See `gaps.md` §10.
 
 ---
 

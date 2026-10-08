@@ -38,5 +38,3 @@ export type { SkillsProps } from './components/Skills';
 
 export { Footer } from './components/Footer';
 export type { FooterProps, FooterLink } from './components/Footer';
-
-export type { Breakpoint } from './components/breakpoint';

@@ -3,12 +3,12 @@
  * Mirrors the Figma component set "Skills" (node 2:673).
  *
  * WHAT THIS IS
- * A section with a "Skills" headline and three SkillItems underneath. On
- * desktop and tablet the three sit in a row; on mobile they stack.
+ * A section with a "Skills" headline and three SkillItems underneath. They
+ * stack on narrow screens and run in a row from 800px up - handled entirely
+ * in Skills.module.css.
  */
 
 import { SkillItem, type SkillItemProps } from '../SkillItem';
-import type { Breakpoint } from '../breakpoint';
 import styles from './Skills.module.css';
 
 export interface SkillsProps {
@@ -19,8 +19,6 @@ export interface SkillsProps {
    * you are not stuck with three in real use.
    */
   items?: SkillItemProps[];
-  /** `desktop` and `tablet` lay the items out in a row; `mobile` stacks them. */
-  breakpoint?: Breakpoint;
 }
 
 export function Skills({
@@ -42,10 +40,9 @@ export function Skills({
         'A working knowledge of HTML and CSS, which makes handover conversations with developers much shorter.',
     },
   ],
-  breakpoint = 'desktop',
 }: SkillsProps) {
   return (
-    <section className={`${styles.skills} ${styles[breakpoint]}`}>
+    <section className={styles.skills}>
       <div className={styles.container}>
         <h2 className={styles.headline}>{headline}</h2>
         <div className={styles.group}>

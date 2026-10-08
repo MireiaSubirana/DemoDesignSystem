@@ -11,10 +11,15 @@ const meta = {
         component: `
 The bar across the top of the page, from the Figma component set **Navigation**.
 
-Logo on the left; on the right either the links plus a Contact button
-(desktop and tablet) or a single hamburger icon (mobile). The desktop and
-mobile versions are genuinely different arrangements rather than the same
-thing resized, which is why \`breakpoint\` matters here more than elsewhere.
+Logo on the left; on the right either the links plus a Contact button (800px
+and up) or a single hamburger icon (narrower). Switch the **viewport** in the
+toolbar to see the swap - there is no prop to set.
+
+These two are genuinely different content, not the same content resized, so
+the component renders **both** and the CSS hides one with \`display: none\`.
+That matters for accessibility: \`display: none\` also hides the element from
+screen readers, so the links are never announced twice. Any other way of
+hiding them would be a bug.
 
 Rendered as a real \`<nav>\` with a list of links inside, so screen reader
 users can jump straight to the navigation and hear how many items it has.
@@ -23,19 +28,12 @@ users can jump straight to the navigation and hear how many items it has.
     },
   },
   argTypes: {
-    breakpoint: {
-      description:
-        'Which layout to show. `desktop` and `tablet` show links + button (they differ only in padding); `mobile` replaces both with the hamburger icon.',
-      control: 'radio',
-      options: ['desktop', 'tablet', 'mobile'],
-      table: { defaultValue: { summary: 'desktop' } },
-    },
     links: {
       description:
         'The navigation links, as `{ label, href }` objects. Three is what the design shows; more will fit on desktop but get tight on tablet.',
     },
     ctaLabel: {
-      description: 'Text on the call-to-action button. Not shown on mobile.',
+      description: 'Text on the call-to-action button. Hidden below 800px.',
       control: 'text',
       table: { defaultValue: { summary: 'Contact' } },
     },
@@ -62,17 +60,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
 };
 
 export const Tablet: Story = {
-  args: { breakpoint: 'tablet' },
   globals: { viewport: { value: 'tablet' } },
 };
 
 export const Mobile: Story = {
-  args: { breakpoint: 'mobile' },
   globals: { viewport: { value: 'mobile' } },
   parameters: {
     docs: {
@@ -85,7 +80,7 @@ export const Mobile: Story = {
 
 export const MobileMenuOpen: Story = {
   name: 'Mobile / menu open',
-  args: { breakpoint: 'mobile', menuOpen: true },
+  args: { menuOpen: true },
   globals: { viewport: { value: 'mobile' } },
   parameters: {
     docs: {

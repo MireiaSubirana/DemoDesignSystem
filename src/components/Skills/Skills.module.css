@@ -1,14 +1,29 @@
+/*
+ * Skills
+ *
+ * RESPONSIVE STRATEGY - mobile-first media queries. Base rules = small
+ * screens. See the longer explanation at the top of Hero.module.css.
+ *
+ * Skills needs both thresholds, for two unrelated reasons:
+ *   800px  - the three items change from a stack to a row
+ *   1280px - the side padding widens
+ */
+
 .skills {
   display: flex;
   flex-direction: column;
   background-color: var(--surface-default);
   width: 100%;
   box-sizing: border-box;
+  /* Mobile and tablet share this in Figma: 48px top/bottom, 24px sides. */
+  padding: var(--space-700) var(--space-500);
 }
 
-.desktop { padding: var(--space-700) var(--space-600); } /* 48px / 32px */
-.tablet  { padding: var(--space-700) var(--space-500); } /* 48px / 24px */
-.mobile  { padding: var(--space-700) var(--space-500); } /* 48px / 24px */
+@media (min-width: 1280px) {
+  .skills {
+    padding: var(--space-700) var(--space-600); /* 48px / 32px */
+  }
+}
 
 .container {
   display: flex;
@@ -27,18 +42,17 @@
   margin: 0;
 }
 
+/* MOBILE: the three items stack. */
 .group {
   display: flex;
-  gap: var(--space-700); /* 48px between items, at every breakpoint */
-}
-
-/* The only real layout difference: the direction the items run in. */
-.desktop .group,
-.tablet .group {
-  flex-direction: row;
-  align-items: stretch; /* All three get the same height, so the top rules line up. */
-}
-
-.mobile .group {
+  gap: var(--space-700); /* 48px between items, at every width */
   flex-direction: column;
+}
+
+/* TABLET AND UP: they run in a row. */
+@media (min-width: 800px) {
+  .group {
+    flex-direction: row;
+    align-items: stretch; /* Equal heights, so the top rules line up. */
+  }
 }

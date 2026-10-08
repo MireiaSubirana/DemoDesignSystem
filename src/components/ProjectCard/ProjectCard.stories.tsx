@@ -12,7 +12,15 @@ const meta = {
         component: `
 A card showing one piece of work, from the Figma component set
 **ProjectCard**: image, title, description and a "find out more" link.
-Side by side on desktop and tablet; stacked on mobile, image always first.
+Image and text sit side by side when there is room and stack when there is not.
+
+**This card measures itself, not the window.** It is the only component in the
+system that uses a CSS *container* query rather than a media query, because a
+card is a reusable piece: it might be full width down the page, three-up in a
+grid, or in a narrow sidebar. Asking "how wide is the browser?" gets the
+sidebar case wrong - on a 1280px screen a media-query card would lay itself
+out side by side inside a 300px column and break. Asking "how much room have
+I got?" is right everywhere. See the *In a narrow column* story below.
 
 \`hasBG\` reproduces a layer in Figma called "bg" that sits behind the card
 and can be switched off. Turn it off when the card already sits on a tinted
@@ -48,13 +56,6 @@ self-contained piece of content that would still make sense on its own.
       table: { defaultValue: { summary: 'find out more →' } },
     },
     linkHref: { description: 'Where the link goes.', control: 'text' },
-    breakpoint: {
-      description:
-        '`desktop` and `tablet` show image and text side by side (different padding); `mobile` stacks them.',
-      control: 'radio',
-      options: ['desktop', 'tablet', 'mobile'],
-      table: { defaultValue: { summary: 'desktop' } },
-    },
   },
   args: {
     headline: 'Moonlearning',
@@ -70,23 +71,20 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
 };
 
 export const Tablet: Story = {
-  args: { breakpoint: 'tablet' },
   globals: { viewport: { value: 'tablet' } },
 };
 
 export const Mobile: Story = {
-  args: { breakpoint: 'mobile' },
   globals: { viewport: { value: 'mobile' } },
 };
 
 export const WithoutBackground: Story = {
   name: 'Desktop / hasBG off',
-  args: { breakpoint: 'desktop', hasBG: false },
+  args: { hasBG: false },
   globals: { viewport: { value: 'desktop' } },
   parameters: {
     docs: {
@@ -100,7 +98,6 @@ export const WithoutBackground: Story = {
 
 export const TwoCards: Story = {
   name: 'Two cards in a list',
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
   parameters: {
     docs: {
@@ -120,6 +117,34 @@ export const TwoCards: Story = {
         media={sampleProjectShotAlt}
         linkHref="#checkout"
       />
+    </div>
+  ),
+};
+
+export const InNarrowColumn: Story = {
+  name: 'In a narrow column',
+  globals: { viewport: { value: 'desktop' } },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The payoff of the container query. The viewport here is the full 1280px desktop, but the card has been given a 320px column - and it correctly uses its stacked layout, because it is reading its own width rather than the window. A media-query version would show the side-by-side desktop layout squeezed into 320px.',
+      },
+    },
+  },
+  render: (args) => (
+    // A deliberately narrow column, as if the card were in a sidebar.
+    <div style={{ display: 'flex', gap: 'var(--space-600)', alignItems: 'start' }}>
+      <div style={{ width: 320, flex: '0 0 auto' }}>
+        <ProjectCard {...args} />
+      </div>
+      <div style={{ flex: 1 }}>
+        <ProjectCard
+          {...args}
+          headline="The same card, full width"
+          media={sampleProjectShotAlt}
+        />
+      </div>
     </div>
   ),
 };

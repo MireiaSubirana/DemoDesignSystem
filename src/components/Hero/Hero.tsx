@@ -6,11 +6,11 @@
  * The big introduction block at the top of a page: a small name/subtitle, and
  * underneath it the largest piece of text on the whole site.
  *
- * All three breakpoints stack vertically - only the padding changes - so this
- * is the simplest of the layout components.
+ * It stacks vertically at every window width - only the padding changes - so
+ * this is the simplest of the layout components. The responsiveness lives
+ * entirely in Hero.module.css; there is nothing to pass in.
  */
 
-import type { Breakpoint } from '../breakpoint';
 import styles from './Hero.module.css';
 
 export interface HeroProps {
@@ -27,8 +27,6 @@ export interface HeroProps {
    * meant to be changed, so it is exposed as a prop. Noted in gaps.md.
    */
   subtitle?: string;
-  /** Which padding set to use. The layout itself is identical at all three. */
-  breakpoint?: Breakpoint;
   /**
    * The heading level this renders as. Defaults to `h1`, which is correct when
    * the Hero is the top of a page - every page should have exactly one h1.
@@ -40,11 +38,10 @@ export interface HeroProps {
 export function Hero({
   headline = 'UX. UI. \nAgentic AI.',
   subtitle = 'James Jones',
-  breakpoint = 'desktop',
   as: Heading = 'h1',
 }: HeroProps) {
   return (
-    <section className={`${styles.hero} ${styles[breakpoint]}`}>
+    <section className={styles.hero}>
       <div className={styles.container}>
         <p className={styles.subtitle}>{subtitle}</p>
         {/* `Heading` is a capitalised variable, which is how React renders a

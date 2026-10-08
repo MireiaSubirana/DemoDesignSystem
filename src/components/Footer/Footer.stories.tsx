@@ -10,8 +10,9 @@ const meta = {
       description: {
         component: `
 The strip at the bottom of the page, from the Figma component set **Footer**:
-a copyright line plus a couple of links. A centred row on desktop and tablet;
-stacked and left-aligned on mobile.
+a copyright line plus a couple of links. Stacked and centred on narrow
+screens, a single centred row from 800px up. Switch the **viewport** in the
+toolbar to see it - there is no prop to set.
 
 This is the only component that uses the **inverse** tokens -
 \`surface/inverse\` and \`text/inverse\`. That means it is dark with light text
@@ -30,13 +31,6 @@ knows about dark mode.
     links: {
       description: 'The links after the copyright, as `{ label, href }` objects.',
     },
-    breakpoint: {
-      description:
-        '`desktop` and `tablet` show a centred row; `mobile` stacks the items and left-aligns them.',
-      control: 'radio',
-      options: ['desktop', 'tablet', 'mobile'],
-      table: { defaultValue: { summary: 'desktop' } },
-    },
   },
   args: {
     copyright: '© 2026 Kim Jones',
@@ -51,23 +45,19 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
 };
 
 export const Tablet: Story = {
-  args: { breakpoint: 'tablet' },
   globals: { viewport: { value: 'tablet' } },
 };
 
 export const Mobile: Story = {
-  args: { breakpoint: 'mobile' },
   globals: { viewport: { value: 'mobile' } },
 };
 
 export const DarkMode: Story = {
   name: 'Desktop / dark mode',
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' }, theme: 'dark' },
   parameters: {
     docs: {

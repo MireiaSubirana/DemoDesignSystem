@@ -4,9 +4,13 @@
  *
  * WHAT THIS IS
  * A two-column block: words on one side, an image on the other, with an
- * optional button at the end of the text. On mobile it becomes one column
- * with the image ON TOP - note that the order genuinely changes, it is not
- * just the same columns turned sideways.
+ * optional button at the end of the text. On narrow screens it becomes one
+ * column with the image ON TOP.
+ *
+ * The markup below always puts the text first, because that is the reading
+ * order a screen reader should follow. The CSS moves the image above it
+ * visually on narrow screens using `order` - About.module.css explains why
+ * that is safe here, and when it would stop being safe.
  *
  * ABOUT THE `media` PROP
  * In Figma, `media` is a SLOT - a hole in the design that you drop any image
@@ -17,7 +21,6 @@
 
 import type { ReactNode } from 'react';
 import { Button } from '../Button';
-import type { Breakpoint } from '../breakpoint';
 import styles from './About.module.css';
 
 export interface AboutProps {
@@ -43,8 +46,6 @@ export interface AboutProps {
   buttonLabel?: string;
   /** Called when the button is clicked. */
   onButtonClick?: () => void;
-  /** `desktop` and `tablet` put text and image side by side; `mobile` stacks them. */
-  breakpoint?: Breakpoint;
 }
 
 export function About({
@@ -54,12 +55,7 @@ export function About({
   hadButton = true,
   buttonLabel = 'Contact',
   onButtonClick,
-  breakpoint = 'desktop',
 }: AboutProps) {
-  // On mobile the image comes first; on wider screens the text does. Putting
-  // this in a variable keeps the JSX below readable.
-  const isMobile = breakpoint === 'mobile';
-
   const content = (
     <div className={styles.content}>
       <h2 className={styles.headline}>{headline}</h2>
@@ -80,19 +76,10 @@ export function About({
   );
 
   return (
-    <section className={`${styles.about} ${styles[breakpoint]}`}>
+    <section className={styles.about}>
       <div className={styles.container}>
-        {isMobile ? (
-          <>
-            {mediaBlock}
-            {content}
-          </>
-        ) : (
-          <>
-            {content}
-            {mediaBlock}
-          </>
-        )}
+        {content}
+        {mediaBlock}
       </div>
     </section>
   );

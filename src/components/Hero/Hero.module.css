@@ -1,14 +1,39 @@
+/*
+ * Hero
+ *
+ * RESPONSIVE STRATEGY - mobile-first media queries
+ * The rules outside any @media block are the SMALL-SCREEN ones. The media
+ * queries below then add to them as the window gets wider. Written this way
+ * round because the simplest layout is the safest default: if a media query
+ * never fires, the page is still correct.
+ *
+ * The two thresholds - 800px and 1280px - are the same numbers as the Figma
+ * frames, the font-size modes in styles/tokens.css, and every other component
+ * in this system. Layout and type scale therefore always change together.
+ * (CSS cannot read a token inside a media query, which is why these two
+ * numbers are typed literally here rather than coming from a variable.)
+ *
+ * Hero itself only changes padding - the layout is a vertical stack at every
+ * width - so it needs just the 1280px query.
+ */
+
 .hero {
   display: flex;
   flex-direction: column;
   background-color: var(--surface-default);
   width: 100%;
   box-sizing: border-box;
+  /* Mobile and tablet share this padding in the Figma frames: 32px top and
+   * bottom, 24px left and right. */
+  padding: var(--space-600) var(--space-500);
 }
 
-.desktop { padding: var(--space-600); }                        /* 32px all round */
-.tablet  { padding: var(--space-600) var(--space-500); }        /* 32px / 24px */
-.mobile  { padding: var(--space-600) var(--space-500); }        /* 32px / 24px */
+/* Desktop widens the side padding to match the top and bottom. */
+@media (min-width: 1280px) {
+  .hero {
+    padding: var(--space-600); /* 32px all round */
+  }
+}
 
 .container {
   display: flex;
@@ -32,7 +57,11 @@
 }
 
 /* Mirrors Figma's font/display/md text style - including the uppercase, which
- * is part of the design rather than something you type in the text. */
+ * is part of the design rather than something you type in the text.
+ *
+ * Note there is no responsive code here at all: --font-size-600 is itself
+ * 48px / 64px / 80px depending on the window, because tokens.css declares it
+ * three times behind the same two media queries. */
 .headline {
   font-family: var(--font-family-sans), sans-serif;
   font-size: var(--font-size-600);

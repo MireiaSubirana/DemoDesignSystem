@@ -1,4 +1,39 @@
+/*
+ * ProjectCard
+ *
+ * RESPONSIVE STRATEGY - CONTAINER queries, not media queries.
+ * This is the one component in the system that does NOT look at the window.
+ *
+ * WHY THE DIFFERENCE
+ * A card is a reusable piece: it might sit full-width down the middle of the
+ * page, or three-up in a grid, or in a narrow sidebar. What it needs to know
+ * is "how much room have I been given?" - not "how wide is the browser?".
+ * Those two are the same thing only when the card happens to be full width.
+ *
+ * A media-query version would get a sidebar wrong: on a 1280px screen it
+ * would confidently lay the image and text out side by side inside a 300px
+ * column and break. A container query asks about the card's own width, so it
+ * is right everywhere with nobody passing it anything.
+ *
+ * HOW IT WORKS
+ * `container-type: inline-size` on .card means "I am a thing whose width can
+ * be queried" ("inline-size" is CSS for width in left-to-right languages).
+ * `@container (min-width: ...)` then matches against THAT width.
+ *
+ * One rule to know: a container cannot query itself - the rules inside an
+ * @container block apply to its DESCENDANTS. That is why the padding lives on
+ * .container (inside) rather than on .card (the container itself). The
+ * background stays on .card, and .container fills it, so it still covers the
+ * padded area exactly as before.
+ *
+ * The thresholds are the same 800 / 1280 as everywhere else, so on the real
+ * page - where the card IS full width - it behaves identically to the other
+ * five components.
+ */
+
 .card {
+  /* Makes this element's width queryable by the rules below. */
+  container-type: inline-size;
   width: 100%;
   box-sizing: border-box;
   background-color: var(--surface-default);
@@ -12,23 +47,28 @@
    * rounded things in this design system are buttons. */
 }
 
-.desktop { padding: var(--space-600); } /* 32px */
-.tablet  { padding: var(--space-500); } /* 24px */
-.mobile  { padding: var(--space-500); } /* 24px */
-
+/* NARROW (the default): image above text, tighter padding. */
 .container {
   display: flex;
-  gap: var(--space-600); /* 32px, at every breakpoint */
-}
-
-.desktop .container,
-.tablet .container {
-  flex-direction: row;
-  align-items: flex-start;
-}
-
-.mobile .container {
   flex-direction: column;
+  gap: var(--space-600); /* 32px, at every width */
+  box-sizing: border-box;
+  padding: var(--space-500); /* 24px */
+}
+
+/* ROOMIER THAN 800px: image and text side by side. */
+@container (min-width: 800px) {
+  .container {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+/* ROOMIER THAN 1280px: more generous padding. */
+@container (min-width: 1280px) {
+  .container {
+    padding: var(--space-600); /* 32px */
+  }
 }
 
 .media {

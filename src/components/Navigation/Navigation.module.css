@@ -1,3 +1,24 @@
+/*
+ * Navigation
+ *
+ * RESPONSIVE STRATEGY - mobile-first media queries. Base rules = small
+ * screens. See the longer explanation at the top of Hero.module.css.
+ *
+ * This is the only component where the two arrangements are genuinely
+ * DIFFERENT CONTENT, not the same content rearranged: narrow screens show a
+ * hamburger icon, wide screens show three links plus a Contact button.
+ *
+ * CSS cannot create or remove elements, so Navigation.tsx renders BOTH and
+ * these rules hide one of them. The important detail is that it hides with
+ * `display: none` rather than, say, `visibility: hidden` or moving it
+ * off-screen: `display: none` also removes the element from the accessibility
+ * tree, so a screen reader is never told about two sets of navigation. Any
+ * other hiding technique would announce the links twice.
+ *
+ *   800px  - hamburger out, links and button in
+ *   1280px - padding widens
+ */
+
 .nav {
   display: flex;
   align-items: center;
@@ -7,17 +28,36 @@
   background-color: var(--surface-default);
   width: 100%;
   box-sizing: border-box; /* So padding counts inside the width, not on top. */
+  /* Mobile and tablet share this in Figma: 16px top/bottom, 24px sides. */
+  padding: var(--space-400) var(--space-500);
 }
 
-/* Padding differs per breakpoint, measured from the Figma frames. */
-.desktop { padding: var(--space-500) var(--space-600); } /* 24px / 32px */
-.tablet  { padding: var(--space-400) var(--space-500); } /* 16px / 24px */
-.mobile  { padding: var(--space-400) var(--space-500); } /* 16px / 24px */
+@media (min-width: 1280px) {
+  .nav {
+    padding: var(--space-500) var(--space-600); /* 24px / 32px */
+  }
+}
+
+/* MOBILE: the hamburger is shown, the links and button are not. */
+.menuSlot {
+  display: block;
+}
 
 .navItems {
-  display: flex;
+  display: none;
   align-items: center;
   gap: var(--space-700); /* 48px between the link group and the button */
+}
+
+/* TABLET AND UP: the swap. */
+@media (min-width: 800px) {
+  .menuSlot {
+    display: none;
+  }
+
+  .navItems {
+    display: flex;
+  }
 }
 
 .links {

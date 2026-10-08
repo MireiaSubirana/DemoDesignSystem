@@ -15,6 +15,12 @@
  *
  * The four cards alternate their tinted background on/off, which is what
  * creates the banded stripes you see down the page in the design.
+ *
+ * NOTHING HERE KNOWS ABOUT SCREEN SIZES.
+ * Every component responds to the window (or, for ProjectCard, to its own
+ * width) through CSS media and container queries. There is no breakpoint to
+ * read, pass down, or keep in sync - resizing the browser is handled before
+ * any JavaScript runs.
  */
 
 import { useState } from 'react';
@@ -26,7 +32,6 @@ import {
   Skills,
   Footer,
 } from './index';
-import { useBreakpoint } from './useBreakpoint';
 import styles from './HomePage.module.css';
 
 /**
@@ -52,11 +57,7 @@ const projectDescription =
   'I run moonlearning.io, a hands-on learning platform for UI design, Figma, and AI-powered product building. I cut through the noise and help people move from overthinking to designing and building.';
 
 export function HomePage() {
-  // One line, and the whole page becomes responsive: this reads the real
-  // window width and every component below receives the right layout.
-  const breakpoint = useBreakpoint();
-
-  // `useState` lets the page remember whether the mobile menu is open.
+  // `useState` lets the page remember whether the narrow-screen menu is open.
   // `menuOpen` is the current answer; `setMenuOpen` is how you change it.
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -65,7 +66,6 @@ export function HomePage() {
     // skip straight past the navigation to get to it.
     <main className={styles.page}>
       <Navigation
-        breakpoint={breakpoint}
         ctaLabel="contact"
         menuOpen={menuOpen}
         // Flip the remembered value: if it was open, close it, and vice versa.
@@ -78,7 +78,6 @@ export function HomePage() {
       />
 
       <Hero
-        breakpoint={breakpoint}
         subtitle="James Jones"
         headline={'UX. UI. \nAgentic AI.'}
       />
@@ -88,7 +87,6 @@ export function HomePage() {
         {projects.map((project) => (
           <ProjectCard
             key={project.headline}
-            breakpoint={breakpoint}
             headline={project.headline}
             description={projectDescription}
             hasBG={project.hasBG}
@@ -101,17 +99,15 @@ export function HomePage() {
         * scrolls here. */}
       <div id="about">
         <About
-          breakpoint={breakpoint}
           headline="About me"
           description="Welcome to my portfolio! I'm Kim, a passionate graphic UI designer dedicated to crafting visual experiences that resonate with users. My goal is to design interfaces that not only grab attention but also facilitate smooth navigation. I carefully select colour palettes that evoke the right emotions and typography that enhances clarity. I believe that intuitive design is key to guiding users effortlessly on their journey."
           buttonLabel="Contact"
         />
       </div>
 
-      <Skills breakpoint={breakpoint} />
+      <Skills />
 
       <Footer
-        breakpoint={breakpoint}
         copyright="© 2026 Christine Vallaure"
         links={[
           { label: 'Imprint', href: '#imprint' },

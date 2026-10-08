@@ -4,13 +4,13 @@
  *
  * WHAT THIS IS
  * The dark strip at the bottom of the page: a copyright line plus a couple of
- * links. In a row on desktop and tablet, stacked on mobile.
+ * links. Stacked and centred on narrow screens, a single centred row from
+ * 800px up. That switch is pure CSS - see Footer.module.css.
  *
  * Note it uses the "inverse" tokens - a dark background with light text in
  * light mode, and the reverse in dark mode. That swap is automatic.
  */
 
-import type { Breakpoint } from '../breakpoint';
 import styles from './Footer.module.css';
 
 /** One footer link. */
@@ -24,8 +24,6 @@ export interface FooterProps {
   copyright?: string;
   /** The links shown after the copyright. Defaults to Figma's two. */
   links?: FooterLink[];
-  /** `desktop` and `tablet` show a row; `mobile` stacks. */
-  breakpoint?: Breakpoint;
 }
 
 export function Footer({
@@ -34,12 +32,11 @@ export function Footer({
     { label: 'Imprint', href: '#imprint' },
     { label: 'Contact', href: '#contact' },
   ],
-  breakpoint = 'desktop',
 }: FooterProps) {
   return (
     // <footer> is a landmark element, like <nav> - assistive technology can
     // jump straight to it.
-    <footer className={`${styles.footer} ${styles[breakpoint]}`}>
+    <footer className={styles.footer}>
       <div className={styles.content}>
         <p className={styles.text}>{copyright}</p>
         {links.map((link) => (

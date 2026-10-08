@@ -15,11 +15,14 @@ The complete page from the Figma **✏️ Design** page, assembled from the
 design system components: Navigation, Hero, four ProjectCards, About, Skills
 and Footer.
 
-**This page picks its own layout.** Unlike the individual component stories,
-it does not take a \`breakpoint\` prop - it uses the \`useBreakpoint\` hook to
-read the real window width and passes the right value down to every component.
-So to see the three Figma layouts, change the **viewport** in the toolbar (or
-just resize your browser) rather than editing a prop.
+**Nothing on this page is told what size the screen is.** Every component
+responds to the window through CSS media queries - except ProjectCard, which
+responds to its own width through a container query. So to see the three Figma
+layouts, change the **viewport** in the toolbar, or just resize your browser.
+
+Because it is CSS rather than JavaScript, the right layout is correct on the
+very first paint - there is no moment where the page renders wide and then
+snaps.
 
 Have a look at \`src/HomePage.tsx\`: there is no styling in it whatsoever. The
 whole page is components stacked in order, each handed its text. That is the

@@ -4,8 +4,13 @@
  *
  * WHAT THIS IS
  * A card showing one piece of work: an image, a title, a description and a
- * "find out more" link. Image and text sit side by side on desktop and
- * tablet, and stack on mobile.
+ * "find out more" link. Image and text stack when the card is narrow and sit
+ * side by side when it is wide.
+ *
+ * NOTE this card responds to ITS OWN width, not the window's - so it lays
+ * itself out correctly in a sidebar or a grid, not just full width down the
+ * page. That is done with a CSS container query; ProjectCard.module.css
+ * explains it at the top. Nothing is passed in.
  *
  * The `hasBG` prop reproduces a layer in Figma called "bg" that sits behind
  * the card and can be switched off. In code that is simply a background
@@ -13,7 +18,6 @@
  */
 
 import type { ReactNode } from 'react';
-import type { Breakpoint } from '../breakpoint';
 import styles from './ProjectCard.module.css';
 
 export interface ProjectCardProps {
@@ -36,8 +40,6 @@ export interface ProjectCardProps {
   linkLabel?: string;
   /** Where the link goes. */
   linkHref?: string;
-  /** `desktop` and `tablet` show image and text side by side; `mobile` stacks. */
-  breakpoint?: Breakpoint;
 }
 
 export function ProjectCard({
@@ -47,17 +49,13 @@ export function ProjectCard({
   hasBG = true,
   linkLabel = 'find out more →',
   linkHref = '#',
-  breakpoint = 'desktop',
 }: ProjectCardProps) {
   return (
     <article
-      // Three classes, built up in order: the base card, the breakpoint
-      // layout, and - only if hasBG is true - the background.
-      // `.filter(Boolean).join(' ')` drops the empty slot when hasBG is false,
-      // so we never end up with a stray double space in the class list.
-      className={[styles.card, styles[breakpoint], hasBG && styles.withBg]
-        .filter(Boolean)
-        .join(' ')}
+      // Two classes: the base card, and - only if hasBG is true - the
+      // background. `.filter(Boolean).join(' ')` drops the empty slot when
+      // hasBG is false, so we never end up with a stray double space.
+      className={[styles.card, hasBG && styles.withBg].filter(Boolean).join(' ')}
     >
       <div className={styles.container}>
         <div className={styles.media}>

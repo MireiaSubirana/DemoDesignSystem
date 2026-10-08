@@ -13,10 +13,16 @@ const meta = {
 A two-column block from the Figma component set **About**: words on one side,
 an image on the other, with an optional button at the end of the text.
 
-**The order changes on mobile.** On desktop and tablet the text comes first and
-the image sits to its right. On mobile the image moves to the *top*, above the
-text. That is a real change in sequence, not just a wrap - so a screen reader
-user meets the content in a different order too.
+**The image moves on narrow screens.** From 800px up the text comes first with
+the image to its right. Below that the image moves to the *top*, above the
+text, as the Figma mobile frame shows.
+
+Only the *visual* order changes. The markup always puts the text first, and
+CSS \`order\` moves the image up - so a screen reader user always meets the
+content in the same, sensible sequence. (That trick is safe here because the
+image block has nothing you can click or Tab to. If it ever gained a link,
+the visual and keyboard orders would disagree and the markup itself would need
+reordering instead.)
 
 The \`media\` prop is Figma's \`media\` SLOT: pass any JSX you like. If you pass
 nothing you get a plain placeholder box, so the layout never collapses.
@@ -46,13 +52,6 @@ nothing you get a plain placeholder box, so the layout never collapses.
       control: 'text',
       table: { defaultValue: { summary: 'Contact' } },
     },
-    breakpoint: {
-      description:
-        '`desktop` and `tablet` put text and image side by side (different gaps and padding); `mobile` stacks them with the image on top.',
-      control: 'radio',
-      options: ['desktop', 'tablet', 'mobile'],
-      table: { defaultValue: { summary: 'desktop' } },
-    },
     onButtonClick: { description: 'Runs when the button is clicked.' },
   },
   args: {
@@ -68,17 +67,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Desktop: Story = {
-  args: { breakpoint: 'desktop' },
   globals: { viewport: { value: 'desktop' } },
 };
 
 export const Tablet: Story = {
-  args: { breakpoint: 'tablet' },
   globals: { viewport: { value: 'tablet' } },
 };
 
 export const Mobile: Story = {
-  args: { breakpoint: 'mobile' },
   globals: { viewport: { value: 'mobile' } },
   parameters: {
     docs: {
@@ -91,7 +87,7 @@ export const Mobile: Story = {
 
 export const WithoutButton: Story = {
   name: 'Desktop / hadButton off',
-  args: { breakpoint: 'desktop', hadButton: false },
+  args: { hadButton: false },
   globals: { viewport: { value: 'desktop' } },
   parameters: {
     docs: {
@@ -105,7 +101,7 @@ export const WithoutButton: Story = {
 
 export const WithoutMedia: Story = {
   name: 'Desktop / no media passed',
-  args: { breakpoint: 'desktop', media: undefined },
+  args: { media: undefined },
   globals: { viewport: { value: 'desktop' } },
   parameters: {
     docs: {

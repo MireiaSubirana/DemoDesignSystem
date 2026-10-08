@@ -227,12 +227,9 @@ Three things about the Figma page worth knowing:
   Tracker, Soft Agents, Web Template). Desktop and tablet all say "Headline".
   I used the real titles everywhere.
 
-**The page chooses its own layout.** Individual components still take a
-`breakpoint` prop — that is how Figma models it, and it is what lets Storybook
-show all three at once. But a real page cannot ask a person to pick, so
-`src/useBreakpoint.ts` reads the actual window width and feeds the right value
-to every component. The thresholds match both the Figma frames and the
-font-size modes, so layout and type scale always change together.
+**Nothing on the page is told what size the screen is.** See §10 — this
+changed on 8 October 2026. Responsiveness is pure CSS now; `HomePage.tsx`
+passes no breakpoint to anything.
 
 **Real images are still missing.** The Figma design has actual screenshots and
 a portrait photo; the code renders neutral placeholder boxes, because the
@@ -265,11 +262,6 @@ image.
   headline, `Footer`'s copyright and `ProjectCard`'s link label are all
   hardcoded in the design but obviously need changing in real use, so each is
   a prop with the Figma text as its default.
-- **`breakpoint` is a prop, not a media query.** In a finished site, CSS would
-  normally pick the layout from the window width automatically. Figma models it
-  as an explicit choice, and keeping it as a prop means Storybook can show all
-  three layouts at once. If you'd rather it were automatic, that's a small
-  change — ask.
 - **`font-size/500` is unused.** No text style references it. It's still
   exported as `--font-size-500` in case you need it.
 - **Only one radius token exists** (`radius/md`, 8px), so everything rounded in
@@ -295,3 +287,91 @@ If you want the test runner later:
 ```bash
 npx playwright install chromium --with-deps
 ```
+
+---
+
+## 10. The breakpoint rebuild (8 October 2026)
+
+Originally every layout component took a `breakpoint` prop (`desktop` /
+`tablet` / `mobile`), mirroring the Figma component property, and
+`src/useBreakpoint.ts` read the window width and fed it down. That has now been
+replaced with CSS. **The `breakpoint` prop and the `useBreakpoint` hook no
+longer exist.**
+
+### Why the prop existed in the first place
+
+Figma has no media queries. A Figma *mode* can change variable values (font
+sizes, spacing) but it cannot change layout — it cannot turn two columns into
+one, or swap a nav bar for a hamburger. So a designer who needs to show three
+screen sizes has to make three variants and keep them in sync by hand.
+
+That workaround is visible in the source file itself: the mobile frame has two
+Footers stacked on top of each other, and only the mobile frame has the real
+project titles (see §7). Both are drift between copies that should have been
+one thing — exactly the cost the file's author warns about in her note.
+
+Translating those variants into a React prop reproduced the workaround in code,
+where it is not needed.
+
+### What it is now
+
+| Component | Responds to | Thresholds |
+|---|---|---|
+| Navigation | window (media query) | 800 (hamburger ↔ links), 1280 (padding) |
+| Hero | window | 1280 (padding) |
+| About | window | 800 and 1280 (padding, columns, image position) |
+| Skills | window | 800 (row ↔ stack), 1280 (padding) |
+| Footer | window | 800 (row ↔ stack) |
+| **ProjectCard** | **its own width (container query)** | 800, 1280 |
+
+**800px is the real switch point**, confirmed by Mireia on 8 October 2026 — it
+is not just the width the tablet frame happened to be drawn at. It is also the
+threshold already used by the `text primitives` modes in `tokens.json`
+(`md (>800)`), so layout and type scale change on the same pixel. Verified in
+the browser: at 799px everything is still in its narrow layout and the headline
+is 48px; at 800px both change together. Same at 1279/1280.
+
+### Three things worth understanding
+
+**ProjectCard uses a container query, not a media query.** A card is reusable —
+it might be full width, three-up in a grid, or in a 320px sidebar. What it
+needs to know is how much room *it* has been given, not how wide the browser
+is. Verified: in a 320px column on a 1280px screen it correctly uses its
+stacked layout, which a media-query version would get wrong. There is a story
+for this — **ProjectCard → In a narrow column**.
+
+**Navigation renders both arrangements and hides one.** CSS can restyle
+elements but cannot create or delete them, and the narrow and wide navs are
+genuinely different content. So both are in the markup and `display: none`
+hides one. `display: none` specifically, because it also removes the element
+from the accessibility tree — verified: at 375px wide, three links are in the
+DOM and none are exposed. Any other way of hiding (`visibility`, off-screen
+positioning) would have screen readers announce the nav twice.
+
+**About's image moves with `order`, not by reordering the markup.** The text is
+always first in the DOM — the sequence a screen reader should follow — and CSS
+lifts the image above it on narrow screens. This is safe only because the image
+block contains nothing focusable. If it ever gains a link or button, the visual
+order and the Tab order would disagree, and the fix at that point is to reorder
+the markup rather than extend the `order` trick.
+
+### What this bought
+
+- The correct layout is applied on the first paint. The old hook ran in
+  JavaScript, so there was a moment where the page rendered at its `desktop`
+  default and then snapped.
+- Three sets of layout rules per component collapsed to two in four of the six,
+  because `tablet` and `mobile` were in fact identical in the Figma frames.
+- `HomePage.tsx` has no responsive code at all.
+
+### What this cost
+
+- Storybook no longer shows three layouts side by side on one canvas. Each
+  story pins a viewport instead (`globals: { viewport: ... }`, at the exact
+  Figma widths), so the iframe is genuinely that size and the media queries
+  really fire. Arguably better: the old version could show you a layout that
+  never occurs at that window width.
+- The numbers 800 and 1280 are typed literally in each CSS file. CSS cannot
+  read a custom property inside a media query, so there is no way to point them
+  at a token. Each file says where the canonical values live.
+
