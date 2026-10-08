@@ -1,0 +1,44 @@
+.skills {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--surface-default);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.desktop { padding: var(--space-700) var(--space-600); } /* 48px / 32px */
+.tablet  { padding: var(--space-700) var(--space-500); } /* 48px / 24px */
+.mobile  { padding: var(--space-700) var(--space-500); } /* 48px / 24px */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-700); /* 48px between the headline and the items */
+}
+
+/* Mirrors Figma's font/headline/lg text style. */
+.headline {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-400);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--text-default);
+  margin: 0;
+}
+
+.group {
+  display: flex;
+  gap: var(--space-700); /* 48px between items, at every breakpoint */
+}
+
+/* The only real layout difference: the direction the items run in. */
+.desktop .group,
+.tablet .group {
+  flex-direction: row;
+  align-items: stretch; /* All three get the same height, so the top rules line up. */
+}
+
+.mobile .group {
+  flex-direction: column;
+}

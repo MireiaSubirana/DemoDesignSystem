@@ -1,0 +1,7 @@
+.logo {
+  width: 48px;  /* Fixed 48x48 in Figma. No size token exists for this - see gaps.md. */
+  height: 48px;
+  border-radius: 50%; /* 50% of any size is always a perfect circle. */
+  background-color: var(--text-accent); /* The brand orange, via its token. */
+  flex-shrink: 0; /* Stops the circle being squashed in a tight flex row. */
+}

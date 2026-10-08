@@ -1,0 +1,248 @@
+/* =============================================================================
+ * tokens.css - GENERATED FILE, DO NOT EDIT BY HAND
+ * =============================================================================
+ * Generated from tokens.json by scripts/build-tokens.mjs.
+ * To change a value: edit tokens.json, then run `npm run build:tokens`.
+ *
+ * Source: Figma file "01 - Step 1: Hand made Figma to Code (Community) (Copy)"
+ * Read on: 2026-10-08
+ * 63 variables across 5 collections, plus 11 text styles.
+ *
+ * HOW DARK MODE WORKS
+ *   Light is the default. Add data-theme="dark" to the <html> element (or any
+ *   wrapper) and every semantic colour below re-points itself at a different
+ *   primitive. Components need no dark-mode code at all.
+ *
+ * HOW RESPONSIVE TYPE WORKS
+ *   Font sizes are written mobile-first. The base values are the small-screen
+ *   ones; the media queries at the bottom enlarge them on wider screens.
+ * ============================================================================= */
+
+:root {
+  --color-brand-100: #ffede5;
+  --color-brand-200: #ffccb8;
+  --color-brand-300: #ffa585;
+  --color-brand-400: #ff8556;
+  --color-brand-500: #ff6330;
+  --color-brand-600: #e54d1a;
+  --color-brand-700: #b33b14;
+  --color-brand-800: #80290d;
+  --color-brand-900: #4d1707;
+  --color-neutral-000: #ffffff;
+  --color-neutral-100: #f7f7f7;
+  --color-neutral-200: #e8e8e8;
+  --color-neutral-300: #d1d1d1;
+  --color-neutral-400: #a0a0a0;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #3d3d3d;
+  --color-neutral-800: #2c2c2c;
+  --color-neutral-900: #161616;
+  --color-neutral-999: #000000;
+  --text-default: var(--color-neutral-900);
+  --text-muted: var(--color-neutral-600);
+  --text-inverse: var(--color-neutral-000);
+  --text-accent: var(--color-brand-500);
+  --text-disabled: var(--color-neutral-400);
+  --surface-default: var(--color-neutral-000);
+  --surface-raised: var(--color-neutral-100);
+  --surface-inverse: var(--color-neutral-900);
+  --surface-accent-subtle: var(--color-brand-100);
+  --border-default: var(--color-neutral-300);
+  --border-strong: var(--color-neutral-900);
+  --border-accent: var(--color-brand-500);
+  --border-focus: var(--color-brand-500);
+  --action-primary-default: var(--color-neutral-800);
+  --action-primary-hover: var(--color-neutral-700);
+  --action-primary-pressed: var(--color-neutral-900);
+  --action-primary-disabled: var(--color-neutral-200);
+  --action-primary-text: var(--color-neutral-000);
+  --action-secondary-default: var(--color-neutral-000);
+  --action-secondary-hover: var(--color-neutral-200);
+  --action-secondary-pressed: var(--color-neutral-300);
+  --action-secondary-text: var(--color-neutral-900);
+  --action-secondary-border: var(--color-neutral-800);
+  --font-family-sans: Poppins;
+  --font-size-100: 16px;
+  --font-size-200: 16px;
+  --font-size-300: 32px;
+  --font-size-400: 32px;
+  --font-size-500: 40px;
+  --font-size-600: 48px;
+  --font-weight-regular: 400;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --space-100: 4px;
+  --space-200: 8px;
+  --space-300: 12px;
+  --space-400: 16px;
+  --space-500: 24px;
+  --space-600: 32px;
+  --space-700: 48px;
+  --space-800: 64px;
+  --space-900: 80px;
+  --radius-md: 8px;
+}
+
+[data-theme="dark"] {
+  --text-default: var(--color-brand-100);
+  --text-muted: var(--color-neutral-400);
+  --text-inverse: var(--color-neutral-900);
+  --text-accent: var(--color-brand-500);
+  --text-disabled: var(--color-neutral-600);
+  --surface-default: var(--color-neutral-900);
+  --surface-raised: var(--color-neutral-800);
+  --surface-inverse: var(--color-neutral-100);
+  --surface-accent-subtle: var(--color-brand-900);
+  --border-default: var(--color-neutral-700);
+  --border-strong: var(--color-neutral-400);
+  --border-accent: var(--color-brand-500);
+  --border-focus: var(--color-brand-400);
+  --action-primary-default: var(--color-neutral-100);
+  --action-primary-hover: var(--color-neutral-200);
+  --action-primary-pressed: var(--color-neutral-300);
+  --action-primary-disabled: var(--color-neutral-700);
+  --action-primary-text: var(--color-neutral-900);
+  --action-secondary-default: var(--color-neutral-900);
+  --action-secondary-hover: var(--color-neutral-800);
+  --action-secondary-pressed: var(--color-neutral-700);
+  --action-secondary-text: var(--color-neutral-100);
+  --action-secondary-border: var(--color-neutral-200);
+}
+
+@media (min-width: 800px) {
+  :root {
+    --font-family-sans: Poppins;
+    --font-size-100: 16px;
+    --font-size-200: 24px;
+    --font-size-300: 32px;
+    --font-size-400: 40px;
+    --font-size-500: 56px;
+    --font-size-600: 64px;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --font-family-sans: Poppins;
+    --font-size-100: 16px;
+    --font-size-200: 24px;
+    --font-size-300: 40px;
+    --font-size-400: 48px;
+    --font-size-500: 56px;
+    --font-size-600: 80px;
+    --font-weight-regular: 400;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+  }
+}
+
+/* =============================================================================
+ * TYPOGRAPHY CLASSES
+ * One class per Figma text style. Put the class on an element and it gets the
+ * whole recipe - size, weight, family, line height, letter spacing, casing.
+ * ============================================================================= */
+
+/* font/display/md - The single biggest piece of text on a page - the hero headline. Note it is UPPERCASE by design. */
+.font-display-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-600);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* font/headline/lg - Large section headline. */
+.font-headline-lg {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-400);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+}
+
+/* font/headline/md - Medium headline, e.g. a sub-section title. */
+.font-headline-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-300);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+/* font/headline/sm - Small headline, e.g. a card title. */
+.font-headline-sm {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+/* font/caption/md - Large supporting text that sits under a headline. */
+.font-caption-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-200);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.45;
+  letter-spacing: -0.005em;
+}
+
+/* font/body/md/default - Standard paragraph text. */
+.font-body-md-default {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+/* font/body/md/strong - Paragraph text, emphasised. */
+.font-body-md-strong {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+/* font/link/inline - A link inside a paragraph - underlined so it is identifiable without relying on colour. */
+.font-link-inline {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  text-decoration: underline;
+}
+
+/* font/link/md - A standalone link, e.g. in a footer. */
+.font-link-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+}
+
+/* font/button/md - Button labels. */
+.font-button-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;
+  letter-spacing: 0em;
+}
+
+/* font/navigation/md - Navigation links. */
+.font-navigation-md {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;
+  letter-spacing: 0em;
+}

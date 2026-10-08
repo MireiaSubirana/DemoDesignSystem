@@ -1,0 +1,106 @@
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: var(--surface-default);
+}
+
+/* The optional tinted panel. In Figma this is a separate "bg" layer whose
+ * visibility the hasBG property toggles; here it is just a background colour. */
+.withBg {
+  background-color: var(--surface-raised);
+  /* No border-radius: the panel has square corners in Figma. The only
+   * rounded things in this design system are buttons. */
+}
+
+.desktop { padding: var(--space-600); } /* 32px */
+.tablet  { padding: var(--space-500); } /* 24px */
+.mobile  { padding: var(--space-500); } /* 24px */
+
+.container {
+  display: flex;
+  gap: var(--space-600); /* 32px, at every breakpoint */
+}
+
+.desktop .container,
+.tablet .container {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.mobile .container {
+  flex-direction: column;
+}
+
+.media {
+  flex: 1;
+  min-width: 0;
+}
+
+/* In Figma the image is a wide rectangle rather than a square, so we use a
+ * 16:9 ratio - the closest standard ratio to what the frames measure. */
+.media > * {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover; /* Crops rather than squashes an image of another shape. */
+  /* Square corners, matching Figma. */
+}
+
+.mediaPlaceholder {
+  /* Slightly different from the card background so the placeholder is visible
+   * even when hasBG is on. */
+  background-color: var(--border-default);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-400); /* 16px */
+  flex: 1;
+  min-width: 0;
+  align-items: flex-start;
+}
+
+/* Mirrors Figma's font/headline/md text style. */
+.headline {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-300);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--text-default);
+  margin: 0;
+}
+
+/* Mirrors Figma's font/body/md/default text style. */
+.description {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  color: var(--text-default);
+  margin: 0;
+}
+
+/* Mirrors Figma's font/link/md text style. */
+.link {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  color: var(--action-secondary-text);
+  text-decoration: none;
+}
+
+/* No hover state in Figma; an underline is the accessible default. See gaps.md. */
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

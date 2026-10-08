@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kim Jones - UX, UI and Agentic AI</title>
+
+    <!-- Load Poppins, the only typeface in the design system, in the three
+         weights the Figma font-weight tokens use (400, 600, 700).
+         Without this the page falls back to a default sans-serif. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Removes the small default margin every browser puts around the page,
+         and makes the whole page use the design system's font and colours. -->
+    <style>
+      body {
+        margin: 0;
+        font-family: var(--font-family-sans), sans-serif;
+        background-color: var(--surface-default);
+        color: var(--text-default);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

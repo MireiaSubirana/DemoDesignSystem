@@ -1,0 +1,19 @@
+<!--
+  Anything in this file is injected into the <head> of the Storybook preview.
+
+  WHY THIS IS HERE
+  The whole design system is set in Poppins. Poppins is not installed on most
+  computers, so without this the components would silently fall back to a
+  default sans-serif and nothing would look quite right. These two lines load
+  it from Google Fonts.
+
+  The weights (400, 600, 700) are exactly the three in the Figma
+  font-weight tokens: regular, semibold and bold. Loading only what we use
+  keeps the page fast.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+  rel="stylesheet"
+/>

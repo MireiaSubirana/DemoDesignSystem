@@ -1,0 +1,17 @@
+/*
+ * There is almost nothing here on purpose.
+ *
+ * Every component brings its own padding, colours and internal layout, so the
+ * page itself only has to stack them in a column. If you ever find yourself
+ * adding lots of CSS to a page file, that is usually a sign something belongs
+ * in a component instead.
+ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  /* The page background, so any gap between sections is the right colour. */
+  background-color: var(--surface-default);
+  /* Fill the window even when the content is short. */
+  min-height: 100vh;
+}

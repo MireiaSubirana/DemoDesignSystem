@@ -1,0 +1,90 @@
+.about {
+  background-color: var(--surface-default);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Padding measured from the three Figma frames. */
+.desktop { padding: var(--space-800) var(--space-700) var(--space-700) var(--space-800); } /* 64 48 48 64 */
+.tablet  { padding: var(--space-700) var(--space-600); }                                   /* 48 / 32 */
+.mobile  { padding: var(--space-600) var(--space-500); }                                   /* 32 / 24 */
+
+.container {
+  display: flex;
+}
+
+/* Side by side on desktop and tablet, with different gaps. */
+.desktop .container {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-900); /* 80px */
+}
+.tablet .container {
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--space-800); /* 64px */
+}
+.mobile .container {
+  flex-direction: column;
+  gap: var(--space-500); /* 24px */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-500); /* 24px between headline, paragraph and button */
+  /* `flex: 1` + `min-width: 0` is the standard pair that lets a flex column
+   * shrink properly instead of overflowing when the text is long. */
+  flex: 1;
+  min-width: 0;
+  /* Stops the button stretching to the full column width on desktop, which
+   * matches Figma's "hug contents" sizing. */
+  align-items: flex-start;
+}
+
+/* Mirrors Figma's font/headline/lg text style. */
+.headline {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-400);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: var(--text-default);
+  margin: 0;
+}
+
+/* Mirrors Figma's font/body/md/default text style. */
+.description {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  color: var(--text-default);
+  margin: 0;
+}
+
+.media {
+  flex: 1;
+  min-width: 0;
+}
+
+/* In Figma the media slot is a perfect square, so we force a 1:1 ratio rather
+ * than a fixed pixel height - that way it stays square at any width. */
+.media > * {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover; /* Crops rather than squashes an image of another shape. */
+  /* Square corners, matching Figma. */
+}
+
+.mediaPlaceholder {
+  background-color: var(--surface-raised);
+}
+
+/* On mobile the image is full width and the button goes full width too,
+ * which is what the Figma mobile frame shows. */
+.mobile .content {
+  align-items: stretch;
+}

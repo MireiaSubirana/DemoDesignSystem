@@ -1,0 +1,55 @@
+.nav {
+  display: flex;
+  align-items: center;
+  /* Pushes the logo to the far left and the rest to the far right - this is
+   * Figma's SPACE_BETWEEN alignment. */
+  justify-content: space-between;
+  background-color: var(--surface-default);
+  width: 100%;
+  box-sizing: border-box; /* So padding counts inside the width, not on top. */
+}
+
+/* Padding differs per breakpoint, measured from the Figma frames. */
+.desktop { padding: var(--space-500) var(--space-600); } /* 24px / 32px */
+.tablet  { padding: var(--space-400) var(--space-500); } /* 16px / 24px */
+.mobile  { padding: var(--space-400) var(--space-500); } /* 16px / 24px */
+
+.navItems {
+  display: flex;
+  align-items: center;
+  gap: var(--space-700); /* 48px between the link group and the button */
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--space-600); /* 32px between links */
+  /* Removes the default bullet points and indent that <ul> comes with. */
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* This mirrors Figma's font/navigation/md text style. */
+.link {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-semibold);
+  line-height: normal;
+  color: var(--text-default);
+  text-decoration: none;
+  white-space: nowrap; /* Keeps "about." from wrapping onto two lines. */
+}
+
+/* Figma does not define a hover state for nav links, but a link with no
+ * hover feedback feels broken in a browser. We underline on hover - which
+ * works for colour-blind users too, unlike a colour change. See gaps.md. */
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

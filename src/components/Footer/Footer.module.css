@@ -1,0 +1,56 @@
+.footer {
+  background-color: var(--surface-inverse);
+  width: 100%;
+  box-sizing: border-box;
+  padding: var(--space-500); /* 24px all round */
+}
+
+.content {
+  display: flex;
+  gap: var(--space-500); /* 24px between items */
+}
+
+.desktop .content,
+.tablet .content {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center; /* Figma centres the row horizontally. */
+}
+
+/* On mobile Figma switches the text to centred - the desktop and tablet rows
+ * are left-aligned text that happens to sit in a centred row. Caught by
+ * comparing against the Figma screenshots. */
+.mobile .content {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Both the copyright and the links use Figma's font/body/md/default style. */
+.text,
+.link {
+  font-family: var(--font-family-sans), sans-serif;
+  font-size: var(--font-size-100);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.7;
+  letter-spacing: -0.005em;
+  /* "inverse" text = light on the dark footer, and it flips in dark mode. */
+  color: var(--text-inverse);
+  margin: 0;
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* Figma gives footer links no hover state. An underline is the safest addition:
+ * it does not rely on colour, so it works for colour-blind users. See gaps.md. */
+.link:hover {
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
