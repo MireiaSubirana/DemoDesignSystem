@@ -76,4 +76,6 @@ Run these from `my-design-system/`, not the repo root.
   from Figma's unusable `"Property 1"`). `gaps.md` §1 explains each.
 - Every component and prop has a written description in its story — the
   Storybook MCP addon reads these, so keep them accurate if you change a prop.
-- Not a git repository. There is no version history to consult.
+- Git repository, rooted at `my-design-system/` (not the parent folder). Pushed to
+  `github.com/MireiaSubirana/DemoDesignSystem` over SSH. History starts at the
+  initial commit of 2026-10-08 — nothing before that was ever tracked.
