@@ -1,7 +1,7 @@
 # Figma to Design System
 
 A React design system generated from a Figma file, plus the portfolio page
-built from it. Everything lives in `my-design-system/`.
+built from it. Everything lives in `DemoDesignSystem/`.
 
 ## Who you're working with
 
@@ -51,8 +51,8 @@ the logo size — Figma has no tokens for those, and each is documented.
 
 | File | What it is |
 |---|---|
-| `my-design-system/gaps.md` | Everything that didn't translate cleanly from Figma — Figma-side mistakes, missing states, untokenised values, contrast findings. Read this before answering "why is X like this?" |
-| `my-design-system/README.md` | Commands, how to run things |
+| `DemoDesignSystem/gaps.md` | Everything that didn't translate cleanly from Figma — Figma-side mistakes, missing states, untokenised values, contrast findings. Read this before answering "why is X like this?" |
+| `DemoDesignSystem/README.md` | Commands, how to run things |
 | `src/components/breakpoint.ts` | The shared `desktop \| tablet \| mobile` type and why it's a prop |
 | `src/useBreakpoint.ts` | Hook that makes the real page responsive |
 | `scripts/build-tokens.mjs` | The token → CSS generator |
@@ -66,7 +66,7 @@ the logo size — Figma has no tokens for those, and each is documented.
 | `npm run build:tokens` | Regenerate `tokens.css` from `tokens.json` |
 | `npx tsc --noEmit` | Type-check |
 
-Run these from `my-design-system/`, not the repo root.
+Run these from `DemoDesignSystem/`, not the repo root.
 
 ## Conventions
 
@@ -76,6 +76,6 @@ Run these from `my-design-system/`, not the repo root.
   from Figma's unusable `"Property 1"`). `gaps.md` §1 explains each.
 - Every component and prop has a written description in its story — the
   Storybook MCP addon reads these, so keep them accurate if you change a prop.
-- Git repository, rooted at `my-design-system/` (not the parent folder). Pushed to
+- Git repository, rooted at `DemoDesignSystem/` (not the parent folder). Pushed to
   `github.com/MireiaSubirana/DemoDesignSystem` over SSH. History starts at the
   initial commit of 2026-10-08 — nothing before that was ever tracked.

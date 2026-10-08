@@ -3,10 +3,10 @@
  *
  * Everything the outside world should be able to use is re-exported here, so
  * an app can write one tidy import:
- *   import { Button, Hero, Footer } from 'my-design-system';
+ *   import { Button, Hero, Footer } from 'demo-design-system';
  *
  * Remember to import the stylesheet once too, at the top level of your app:
- *   import 'my-design-system/src/styles/tokens.css';
+ *   import 'demo-design-system/src/styles/tokens.css';
  */
 
 export { Button } from './components/Button';

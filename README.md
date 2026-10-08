@@ -1,4 +1,4 @@
-# my-design-system
+# DemoDesignSystem
 
 A small React design system built directly from a Figma file, where every
 colour, size and font comes from the Figma variables rather than being typed
